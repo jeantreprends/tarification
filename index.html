@@ -55,7 +55,7 @@ body.dark .save-btn{color:#10202a}
 .table-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 16px;border-bottom:1px solid var(--line)}
 .table-heading h2{margin:0}
 .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
-.summary-table{border-collapse:collapse;min-width:1260px;width:100%;font-size:11px}
+.summary-table{border-collapse:collapse;min-width:1140px;width:100%;font-size:11px}
 .summary-table th,.summary-table td{padding:11px 12px;text-align:left;border-right:1px solid var(--line);white-space:nowrap}
 .summary-table th:last-child,.summary-table td:last-child{border-right:0}
 .summary-table th{color:var(--muted);background:var(--accent-soft);font-size:10px;font-weight:750;border-bottom:1px solid var(--line)}
@@ -170,7 +170,6 @@ body.dark .save-btn{color:#10202a}
             <th>Trains</th>
             <th>Autres coûts</th>
             <th>Tarif net</th>
-            <th>Total à facturer</th>
             <th>Tarif réellement facturé</th>
             <th>Marge réelle €</th>
             <th>Marge réelle %</th>
@@ -183,7 +182,6 @@ body.dark .save-btn{color:#10202a}
             <td id="tableCost6">—</td>
             <td id="tableCost7">—</td>
             <td id="tableNet">—</td>
-            <td id="tableInvoice">—</td>
             <td id="tableActual">—</td>
             <td id="tableRealMargin">—</td>
             <td id="tableRealMarginPct">—</td>
@@ -220,12 +218,11 @@ function updateSummaryTable(data){
   byId('tableCost6').textContent=euro(data.cost6);
   byId('tableCost7').textContent=euro(data.cost7);
   byId('tableNet').textContent=euro(data.net);
-  byId('tableInvoice').textContent=euro(data.invoice);
   byId('tableActual').textContent=euro(data.actual);
   byId('tableRealMargin').textContent=euro(data.realMargin);
   byId('tableRealMarginPct').textContent=percent(data.realMarginPct);
 }
-function calculate(){var f=byId('formula'),formula=f?f.value:'',net=formula==='Autre'?numberValue('customRate'):(rates[formula]||0),cost4=numberValue('cost4'),cost5=numberValue('cost5'),cost6=numberValue('cost6'),cost7=numberValue('cost7'),costs=cost4+cost5+cost6+cost7,musicians=numberValue('musicians'),fees=musicians*150,invoice=net+costs,margin=invoice-costs-fees,marginPct=invoice?margin/invoice*100:0,actual=numberValue('actual'),realMargin=actual-costs-fees,realMarginPct=actual?realMargin/actual*100:0;byId('net').textContent=euro(net);byId('costs').textContent=euro(costs);byId('fees').textContent=euro(fees);byId('invoice').textContent=euro(invoice);byId('margin').textContent=euro(margin);byId('marginPct').textContent=percent(marginPct);byId('realMargin').textContent=euro(realMargin);byId('realMarginPct').textContent=percent(realMarginPct);setSignedClass('margin',margin);setSignedClass('marginPct',marginPct);setSignedClass('realMargin',realMargin);setSignedClass('realMarginPct',realMarginPct);updateSummaryTable({formula:formula,musicians:musicians,cost4:cost4,cost5:cost5,cost6:cost6,cost7:cost7,net:net,invoice:invoice,actual:actual,realMargin:realMargin,realMarginPct:realMarginPct})}
+function calculate(){var f=byId('formula'),formula=f?f.value:'',net=formula==='Autre'?numberValue('customRate'):(rates[formula]||0),cost4=numberValue('cost4'),cost5=numberValue('cost5'),cost6=numberValue('cost6'),cost7=numberValue('cost7'),costs=cost4+cost5+cost6+cost7,musicians=numberValue('musicians'),fees=musicians*150,invoice=net+costs,margin=invoice-costs-fees,marginPct=invoice?margin/invoice*100:0,actual=numberValue('actual'),realMargin=actual-costs-fees,realMarginPct=actual?realMargin/actual*100:0;byId('net').textContent=euro(net);byId('costs').textContent=euro(costs);byId('fees').textContent=euro(fees);byId('invoice').textContent=euro(invoice);byId('margin').textContent=euro(margin);byId('marginPct').textContent=percent(marginPct);byId('realMargin').textContent=euro(realMargin);byId('realMarginPct').textContent=percent(realMarginPct);setSignedClass('margin',margin);setSignedClass('marginPct',marginPct);setSignedClass('realMargin',realMargin);setSignedClass('realMarginPct',realMarginPct);updateSummaryTable({formula:formula,musicians:musicians,cost4:cost4,cost5:cost5,cost6:cost6,cost7:cost7,net:net,actual:actual,realMargin:realMargin,realMarginPct:realMarginPct})}
 function changeMusicians(delta){var i=byId('musicians');if(!i)return;var c=Math.round(numberValue('musicians'));if(c<0)c=0;i.value=Math.max(0,c+delta);calculate()}
 function toggleTable(){var card=byId('tableCard'),button=byId('tableToggle'),open=!card.classList.contains('open');card.classList.toggle('open',open);button.classList.toggle('active',open);button.setAttribute('aria-pressed',open?'true':'false');button.textContent=open?'Masquer le tableau':'Voir en tableau';if(open)calculate()}
 function currentBillingData(){return{formula:byId('formula')?byId('formula').value:'La courte Swing',customRate:numberValue('customRate'),musicians:numberValue('musicians'),cost4:numberValue('cost4'),cost5:numberValue('cost5'),cost6:numberValue('cost6'),cost7:numberValue('cost7'),actual:numberValue('actual')}}
