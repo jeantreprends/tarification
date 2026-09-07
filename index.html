@@ -22,8 +22,10 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-s
 button,input,select{font:inherit}
 .wrap{max-width:980px;margin:0 auto;padding:16px 16px 32px}
 .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.top-actions{display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:flex-end}
 h1{font-size:25px;line-height:1.1;margin:0;letter-spacing:-.03em}
-.theme-toggle{height:38px;border:1px solid var(--button-border);border-radius:999px;background:var(--card);color:var(--text);padding:0 12px;font-size:12px;font-weight:750;display:flex;align-items:center;gap:7px;box-shadow:var(--shadow);cursor:pointer}
+.top-btn{height:38px;border:1px solid var(--button-border);border-radius:999px;background:var(--card);color:var(--text);padding:0 12px;font-size:12px;font-weight:750;display:flex;align-items:center;gap:7px;box-shadow:var(--shadow);cursor:pointer;touch-action:manipulation}
+.top-btn.active{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
 .layout{display:grid;grid-template-columns:1.08fr .92fr;gap:12px;align-items:start}
 .stack{display:grid;gap:12px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
@@ -48,15 +50,27 @@ body.dark .save-btn{color:#10202a}
 .result-item{padding:10px 0;border-bottom:1px solid var(--line);min-width:0}.result-item:nth-last-child(-n+2){border-bottom:0}.result-item span{display:block;font-size:10px;color:var(--muted);margin-bottom:2px}.result-item strong{display:block;font-size:18px;letter-spacing:-.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
 .good{color:var(--good)}.bad{color:var(--bad)}
 .real-grid{display:grid;grid-template-columns:1.15fr .85fr .7fr;gap:16px;align-items:end}.real-grid .result-item{border:0;padding:0}.real-grid .result-item strong{font-size:20px}
+.table-card{display:none;grid-column:1/-1;padding:0;overflow:hidden}
+.table-card.open{display:block}
+.table-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 16px;border-bottom:1px solid var(--line)}
+.table-heading h2{margin:0}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.summary-table{border-collapse:collapse;min-width:1260px;width:100%;font-size:11px}
+.summary-table th,.summary-table td{padding:11px 12px;text-align:left;border-right:1px solid var(--line);white-space:nowrap}
+.summary-table th:last-child,.summary-table td:last-child{border-right:0}
+.summary-table th{color:var(--muted);background:var(--accent-soft);font-size:10px;font-weight:750;border-bottom:1px solid var(--line)}
+.summary-table td{font-weight:800;font-variant-numeric:tabular-nums}
 .history-card{padding:0;overflow:hidden}.history-toggle{width:100%;border:0;background:transparent;color:var(--text);padding:13px 16px;display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:800;cursor:pointer}.history-toggle span:last-child{font-size:11px;color:var(--muted);font-weight:650}.history-body{display:none;border-top:1px solid var(--line);padding:0 16px 12px}.history-card.open .history-body{display:block}.history-empty{padding:14px 0 2px;color:var(--muted);font-size:12px}.history-item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}.history-item:last-child{border-bottom:0}.history-name{display:block;font-size:13px;font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.history-meta{font-size:10px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 9px;margin-top:3px}.history-total{color:var(--text);font-weight:750}.history-actions{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}.history-btn{height:32px;border:1px solid var(--button-border);border-radius:8px;background:var(--accent-soft);color:var(--accent);padding:0 8px;font-size:10px;font-weight:750;cursor:pointer}.history-btn.danger{background:transparent;color:var(--bad);border-color:var(--line)}
 @media(max-width:760px){
-  .wrap{padding:12px 10px 24px}.topbar{margin-bottom:9px}h1{font-size:22px}.theme-toggle{height:36px;padding:0 10px;font-size:11px}
+  .wrap{padding:12px 10px 24px}.topbar{margin-bottom:9px;align-items:flex-start}h1{font-size:22px}.top-actions{gap:5px}.top-btn{height:36px;padding:0 10px;font-size:11px}
   .layout{grid-template-columns:1fr;gap:9px}.stack{gap:9px}.card{border-radius:12px;padding:13px}h2{margin-bottom:10px}
   .form-grid{gap:8px}.field.full{grid-column:1/-1}input,select{height:39px;font-size:13px}.musician-control{grid-template-columns:48px 1fr 48px}.step-btn{height:44px;font-size:24px}.musician-control input{height:44px}
   .action-row{margin-top:9px}.save-btn{height:42px;width:100%}.hero{padding:13px 14px;margin-bottom:7px}.hero strong{font-size:28px}
   .result-grid{column-gap:14px}.result-item{padding:8px 0}.result-item strong{font-size:16px}.real-grid{grid-template-columns:1.2fr 1fr 1fr;gap:10px}.real-grid label{font-size:10px}.real-grid .result-item strong{font-size:17px}.real-grid .result-item span{font-size:9px}
   .history-item{grid-template-columns:1fr;gap:7px}.history-actions{justify-content:flex-start}.history-btn{height:34px}
+  .summary-table{font-size:10px}.summary-table th,.summary-table td{padding:10px}
 }
+@media(max-width:500px){.topbar{display:block}.top-actions{margin-top:9px;justify-content:flex-start}}
 @media(max-width:390px){.real-grid{grid-template-columns:1fr 1fr}.real-input{grid-column:1/-1}.result-grid{column-gap:10px}.result-item strong{font-size:15px}}
 </style>
 </head>
@@ -64,7 +78,10 @@ body.dark .save-btn{color:#10202a}
 <div class="wrap">
   <div class="topbar">
     <h1>Tarification & marge</h1>
-    <button id="themeToggle" class="theme-toggle" type="button" onclick="toggleTheme()" aria-pressed="false"><span id="themeIcon">☾</span><span id="themeLabel">Nuit</span></button>
+    <div class="top-actions">
+      <button id="tableToggle" class="top-btn" type="button" onclick="toggleTable()" aria-pressed="false">Voir en tableau</button>
+      <button id="themeToggle" class="top-btn" type="button" onclick="toggleTheme()" aria-pressed="false"><span id="themeIcon">☾</span><span id="themeLabel">Nuit</span></button>
+    </div>
   </div>
 
   <div class="layout">
@@ -141,6 +158,40 @@ body.dark .save-btn{color:#10202a}
       </section>
     </div>
 
+    <section id="tableCard" class="card table-card">
+      <div class="table-heading"><h2>Vue tableau</h2></div>
+      <div class="table-scroll">
+        <table class="summary-table">
+          <thead><tr>
+            <th>Formule choisie</th>
+            <th>Nombre de musiciens</th>
+            <th>Essence + péages</th>
+            <th>Location van</th>
+            <th>Trains</th>
+            <th>Autres coûts</th>
+            <th>Tarif net</th>
+            <th>Total à facturer</th>
+            <th>Tarif réellement facturé</th>
+            <th>Marge réelle €</th>
+            <th>Marge réelle %</th>
+          </tr></thead>
+          <tbody><tr>
+            <td id="tableFormula">—</td>
+            <td id="tableMusicians">—</td>
+            <td id="tableCost4">—</td>
+            <td id="tableCost5">—</td>
+            <td id="tableCost6">—</td>
+            <td id="tableCost7">—</td>
+            <td id="tableNet">—</td>
+            <td id="tableInvoice">—</td>
+            <td id="tableActual">—</td>
+            <td id="tableRealMargin">—</td>
+            <td id="tableRealMarginPct">—</td>
+          </tr></tbody>
+        </table>
+      </div>
+    </section>
+
     <section id="historyCard" class="card history-card" style="grid-column:1/-1">
       <button class="history-toggle" type="button" onclick="toggleHistory()"><span>Historique</span><span id="historyCount"></span></button>
       <div class="history-body">
@@ -160,8 +211,23 @@ function euro(value){var n=isFinite(value)?value:0;try{return new Intl.NumberFor
 function percent(value){var n=isFinite(value)?value:0;try{return new Intl.NumberFormat('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2}).format(n)+' %'}catch(e){return n.toFixed(2).replace('.',',')+' %'}}
 function setSignedClass(id,value){var n=byId(id);if(!n)return;n.classList.toggle('good',value>=0);n.classList.toggle('bad',value<0)}
 function formulaChanged(){var f=byId('formula'),c=byId('customFormulaField'),isCustom=f&&f.value==='Autre';if(c)c.classList.toggle('visible',isCustom);calculate()}
-function calculate(){var f=byId('formula'),formula=f?f.value:'',net=formula==='Autre'?numberValue('customRate'):(rates[formula]||0),costs=numberValue('cost4')+numberValue('cost5')+numberValue('cost6')+numberValue('cost7'),fees=numberValue('musicians')*150,invoice=net+costs,margin=invoice-costs-fees,marginPct=invoice?margin/invoice*100:0,actual=numberValue('actual'),realMargin=actual-costs-fees,realMarginPct=actual?realMargin/actual*100:0;byId('net').textContent=euro(net);byId('costs').textContent=euro(costs);byId('fees').textContent=euro(fees);byId('invoice').textContent=euro(invoice);byId('margin').textContent=euro(margin);byId('marginPct').textContent=percent(marginPct);byId('realMargin').textContent=euro(realMargin);byId('realMarginPct').textContent=percent(realMarginPct);setSignedClass('margin',margin);setSignedClass('marginPct',marginPct);setSignedClass('realMargin',realMargin);setSignedClass('realMarginPct',realMarginPct)}
+function tableFormulaLabel(formula,net){return formula==='Autre'?'Autre — '+euro(net):formula}
+function updateSummaryTable(data){
+  byId('tableFormula').textContent=tableFormulaLabel(data.formula,data.net);
+  byId('tableMusicians').textContent=String(data.musicians);
+  byId('tableCost4').textContent=euro(data.cost4);
+  byId('tableCost5').textContent=euro(data.cost5);
+  byId('tableCost6').textContent=euro(data.cost6);
+  byId('tableCost7').textContent=euro(data.cost7);
+  byId('tableNet').textContent=euro(data.net);
+  byId('tableInvoice').textContent=euro(data.invoice);
+  byId('tableActual').textContent=euro(data.actual);
+  byId('tableRealMargin').textContent=euro(data.realMargin);
+  byId('tableRealMarginPct').textContent=percent(data.realMarginPct);
+}
+function calculate(){var f=byId('formula'),formula=f?f.value:'',net=formula==='Autre'?numberValue('customRate'):(rates[formula]||0),cost4=numberValue('cost4'),cost5=numberValue('cost5'),cost6=numberValue('cost6'),cost7=numberValue('cost7'),costs=cost4+cost5+cost6+cost7,musicians=numberValue('musicians'),fees=musicians*150,invoice=net+costs,margin=invoice-costs-fees,marginPct=invoice?margin/invoice*100:0,actual=numberValue('actual'),realMargin=actual-costs-fees,realMarginPct=actual?realMargin/actual*100:0;byId('net').textContent=euro(net);byId('costs').textContent=euro(costs);byId('fees').textContent=euro(fees);byId('invoice').textContent=euro(invoice);byId('margin').textContent=euro(margin);byId('marginPct').textContent=percent(marginPct);byId('realMargin').textContent=euro(realMargin);byId('realMarginPct').textContent=percent(realMarginPct);setSignedClass('margin',margin);setSignedClass('marginPct',marginPct);setSignedClass('realMargin',realMargin);setSignedClass('realMarginPct',realMarginPct);updateSummaryTable({formula:formula,musicians:musicians,cost4:cost4,cost5:cost5,cost6:cost6,cost7:cost7,net:net,invoice:invoice,actual:actual,realMargin:realMargin,realMarginPct:realMarginPct})}
 function changeMusicians(delta){var i=byId('musicians');if(!i)return;var c=Math.round(numberValue('musicians'));if(c<0)c=0;i.value=Math.max(0,c+delta);calculate()}
+function toggleTable(){var card=byId('tableCard'),button=byId('tableToggle'),open=!card.classList.contains('open');card.classList.toggle('open',open);button.classList.toggle('active',open);button.setAttribute('aria-pressed',open?'true':'false');button.textContent=open?'Masquer le tableau':'Voir en tableau';if(open)calculate()}
 function currentBillingData(){return{formula:byId('formula')?byId('formula').value:'La courte Swing',customRate:numberValue('customRate'),musicians:numberValue('musicians'),cost4:numberValue('cost4'),cost5:numberValue('cost5'),cost6:numberValue('cost6'),cost7:numberValue('cost7'),actual:numberValue('actual')}}
 function totalFromData(d){if(!d)return 0;var net=d.formula==='Autre'?Number(d.customRate||0):(rates[d.formula]||0),costs=Number(d.cost4||0)+Number(d.cost5||0)+Number(d.cost6||0)+Number(d.cost7||0);return net+costs}
 function readHistory(){try{var p=JSON.parse(localStorage.getItem(HISTORY_KEY)||'[]');return Array.isArray(p)?p:[]}catch(e){return[]}}
